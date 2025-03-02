@@ -30,7 +30,7 @@ const HomePage = ({ bgColor }) => {
       <Container className="text-center mt-5 socialLinks">
         <Row className="justify-content-md-center">
           <Col lg={2} className="fs-3">
-            <a href="#" aria-label="GitHub">
+            <a href="https://takako916.github.io/react-portofolio/" aria-label="GitHub">
               <i className="bi bi-github"></i>
             </a>
           </Col>

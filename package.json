@@ -2,7 +2,7 @@
   "name": "react-bootstrap-portofolio",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://takako916.github.io/react-bootstrap-portofolio", 
+  "homepage": "https://github.com/takako916/react-portofolio", 
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
