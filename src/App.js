@@ -1,7 +1,8 @@
 import './App.css';
 import Header from './components/Header';
 import MainContent from "./components/main/MainContent";
-import { BrowserRouter as Router } from "react-router-dom";
+// import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";  
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next"; // ✅ i18n をインポート
 import "./i18n"; // ✅ i18n 設定をインポート
