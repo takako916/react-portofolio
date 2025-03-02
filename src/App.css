@@ -1,38 +1,184 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Roboto&display=swap');
+
+/* ✅ 英語用フォント */
+.lang-en {
+  font-family: "Gowun Dodum", serif;
+}
+
+/* ✅ 日本語用フォント */
+.lang-ja {
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+/* ✅ フランス語用フォント */
+.lang-fr {
+  font-family: "Gowun Dodum", serif;
+}
+
+/* 🌈 ヘッダー & HomePage の背景色アニメーション */
+.animated-bg {
+  transition: background 1s ease-in-out;
+}
+
+/* 🔥 ナビゲーションバーのテキスト & トグルメニューの色 */
+.navbar-custom {
+  transition: background 1s ease-in-out;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link,
+.navbar-custom .nav-dropdown a {
+  color: white !important;
+}
+
+.navbar-custom .navbar-toggler {
+  border-color: white !important;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-dropdown a:hover {
+  color: #ddd !important;
+}
+
+.navbar-custom .navbar-toggler-icon {
+  filter: invert(1); /* ハンバーガーメニューのアイコンを白に */
+}
+
+/* 🌟 ドロップダウンメニューの背景を `Header.js` と統一 */
+.navbar-custom .dropdown-menu {
+  background: inherit !important; /* ヘッダーと同じ背景色を継承 */
+  border: none;
+}
+
+/* メニュー内のテキスト色 */
+.navbar-custom .dropdown-item {
+  color: grey !important;
+
+}
+
+/* ホバー時の背景色 */
+.navbar-custom .dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 🏆 メインタイトル & ソーシャルリンクを白に */
+.mainTitle {
+  color: white !important;
+}
+
+.socialLinks a {
+  color: white !important;
+  text-decoration: none;
+}
+
+/* 🌟 ソーシャルリンクのアイコンを白に */
+.socialLinks i {
+  color: white !important;
+  transition: color 0.3s ease-in-out; /* スムーズな色変化 */
+}
+
+/* 🔥 ソーシャルリンクのホバー時にグレーに */
+.socialLinks a:hover i {
+  color: #ddd !important;
+}
+
+/* ✅ プロジェクトタイトルのリンクの装飾を消す & ホバー時に色変更 */
+.project-title a {
+  text-decoration: none; /* 下線を消す */
+  color: #9f658f; /* Bootstrapの標準リンク色 */
+  transition: color 0.3s ease-in-out; /* スムーズな色変化 */
+}
+
+.project-title a:hover {
+  color: #d95890; /* ホバー時に少し暗い青に */
+}
+
+/* ✅ プログレスバーのスタイル */
+.custom-progress .progress-bar {
+  background-color: #0d6efd !important; /* 青色に変更 */
+  font-weight: bold;
+}
+
+/* ✅ タブのスタイルをカスタマイズ */
+.nav-tabs .nav-link {
+  color: #0d6efd; /* 青色 */
+  font-size: 18px;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #f8f9fa;
+  border-color: #0d6efd;
+  color: #0d6efd;
+  font-weight: bold;
+}
+
+/* ✅ プログレスバーのスムーズなアニメーション */
+.custom-progress .progress-bar {
+  background-color: #0d6efd !important; /* 青色 */
+  font-weight: bold;
+  transition: width 1.5s ease-in-out; /* なめらかに伸びる */
+}
+
+/* ✅ タブのスタイル */
+.nav-tabs .nav-link {
+  color: #0d6efd; /* 青色 */
+  font-size: 18px;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #f8f9fa;
+  border-color: #0d6efd;
+  color: #0d6efd;
+  font-weight: bold;
+}
+/* ✅ ナビバーの高さ分だけ余白を確保 */
+#projects {
+  padding-top: 80px; /* Navbarの高さに応じて調整 */
+  margin-top: -80px; /* ずれを防ぐためのマイナスマージン */
+ } 
+
+/* ✅ ナビバーの高さ分だけ余白を確保 */
+#about {
+  padding-top: 80px; /* Navbarの高さに応じて調整 */
+  margin-top: -80px; /* ずれを防ぐためのマイナスマージン */
+}
+.about_me-section{
+  margin-bottom: 250px;
+}
+#skills {
+  padding-top: 80px; /* Navbarの高さに応じて調整 */
+  margin-top: -80px; /* ずれを防ぐためのマイナスマージン */
+}
+
+
+
+/* ✅ Skills セクションの下に余白を確保 */
+.skills-section {
+  margin-bottom: 220px; /* 適宜調整 */
+}
+
+/* ✅ Footer を適切な位置に配置 */
+.footer {
+  width: 100%;
+  background-color: #f8f9fa;
+  padding: 20px 0;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.about-badge  {
+  border: 2px solid white; /* ✅ 白いボーダー */
+  color: white; /* ✅ 文字色を白 */
+  font-size: 1.5rem; /* ✅ 文字サイズを大きめに */
+  padding: 10px 20px; /* ✅ 内側の余白 */
+  border-radius: 50px; /* ✅ 角を丸く */
+  transition: all 0.3s ease-in-out; /* ✅ スムーズなエフェクト */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* ホバー時のエフェクト */
+.about-badge:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* ✅ 透明な白を軽く適用 */
+  transform: scale(1.1); /* ✅ 少し大きく */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
