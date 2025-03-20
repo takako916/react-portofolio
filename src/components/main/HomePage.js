@@ -35,7 +35,7 @@ const HomePage = ({ bgColor }) => {
             </a>
           </Col>
           <Col lg={2} className="fs-3">
-            <a href="https://www.linkedin.com/in/takako-o-17a8b6300/" target="_blank" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/takako-onodera-reiss/" target="_blank" aria-label="LinkedIn">
               <i className="bi bi-linkedin"></i>
             </a>
           </Col>
