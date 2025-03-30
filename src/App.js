@@ -6,6 +6,7 @@ import { HashRouter as Router } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next"; // ✅ i18n をインポート
 import "./i18n"; // ✅ i18n 設定をインポート
+import { Helmet } from 'react-helmet-async';
 
 // ✅ 明るい色のリスト
 const brightColors = [
@@ -53,6 +54,18 @@ function App() {
 
   return (
     <Router>
+       <Helmet>
+        {/* ✅ Google Analyticsタグ（全ページに適用） */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-35GQXDDW5Z"></script>
+        <script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-35GQXDDW5Z');
+          `}
+        </script>
+      </Helmet>
       <div className={`App lang-${language}`}>
         {/* 言語情報を Header に渡す */}
         <Header bgColor={bgColor} language={language} changeLanguage={changeLanguage} />
