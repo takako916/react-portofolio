@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Container, Card, Row, Col, ListGroup } from "react-bootstrap";
+import { Container, Card, Row, Col, Badge } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import OptimizedImage from '../common/OptimizedImage';
 
 const Projects = () => {
   const { t } = useTranslation();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const projects = [
     {
@@ -16,7 +18,7 @@ const Projects = () => {
       technologies: {
         frontend: "React, Bootstrap, JavaScript",
         backend: "Symfony (PHP)",
-        database: "MySQL",
+        database: "MySQL"
       },
     },
     {
@@ -34,8 +36,6 @@ const Projects = () => {
     },
   ];
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % projects[0].images.length);
@@ -44,50 +44,97 @@ const Projects = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // 文字列をリストに変換する関数
+  const splitTechnologies = (techString) => {
+    return techString.split(', ').map(tech => tech.replace(/ \([^)]*\)/g, ''));
+  };
+
   return (
-    <main className="d-flex flex-column align-items-center justify-content-center" id="projects">
-      <Container className="mt-3">
-        <h1 className="text-center text-secondary">{t("projects")}</h1>
-        {projects.map((project) => (
-          <Card key={project.id} className="my-5 shadow-lg project-card">
-            <Card.Header className="fs-4 text-center bg-body-secondary text-secondary border border-white">
-              {t(project.title)}
-            </Card.Header>
+    <main className="projects-section" id="projects">
+      <Container className="py-5">
+        <h1 className="text-center mb-5 fade-up">{t("projects")}</h1>
+        {projects.map((project, index) => (
+          <Card 
+            key={project.id} 
+            className="project-card mb-5 border-0 fade-up"
+            style={{ 
+              transitionDelay: `${index * 0.2}s`,
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              borderRadius: '16px',
+              overflow: 'hidden'
+            }}
+          >
             <Row className="g-0">
-              <Col md={8} className="d-flex align-items-center overflow-hidden project-image">
-                <img
+              <Col md={8} className="position-relative project-image-container">
+                <div className="project-image-overlay"></div>
+                <OptimizedImage
                   src={project.images[currentImageIndex]}
-                  className="img-fluid rounded-start"
+                  className="project-image"
                   alt={t(project.title)}
                 />
+                <a 
+                  href={project.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="visit-site-button"
+                >
+                  {t("visit_site")}
+                </a>
               </Col>
-              <Col md={4} className="align-items-center">
-                <Card.Body>
-                  <h4 className="card-title text-center project-title">
-                    <a href={project.link} target="_blank" rel="noopener noreferrer">
-                      {t(project.title)}
-                    </a>
-                  </h4>
-                  <p className="card-text fs-5">{t(project.description)}</p>
-                  <ListGroup>
-                    <ListGroup.Item className="fs-6 bg-body-secondary border border-primary-subtle">
+              <Col md={4}>
+                <Card.Body className="p-4">
+                  <h3 className="card-title mb-4">
+                    {t(project.title)}
+                  </h3>
+                  <p className="card-description mb-4">
+                    {t(project.description)}
+                  </p>
+                  
+                  <div className="technologies-section">
+                    <h4 className="tech-title mb-3">
                       {t("technologies")}
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <span className="fw-bold">Frontend: </span>
-                      {project.technologies.frontend}
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <span className="fw-bold">Backend: </span>
-                      {project.technologies.backend}
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <span className="fw-bold">Database: </span>
-                      {project.technologies.database}
-                    </ListGroup.Item>
-                  </ListGroup>
-                  <p className="card-text text mt-3 text-end">
-                    <small className="text-body-secondary">{t(project.published)}</small>
+                    </h4>
+                    
+                    <div className="tech-category mb-3">
+                      <h5 className="tech-subtitle">Frontend</h5>
+                      <div className="d-flex flex-wrap gap-2">
+                        {splitTechnologies(project.technologies.frontend).map((tech, i) => (
+                          <Badge 
+                            key={i} 
+                            className="tech-badge frontend"
+                          >
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="tech-category mb-3">
+                      <h5 className="tech-subtitle">Backend</h5>
+                      <div className="d-flex flex-wrap gap-2">
+                        {splitTechnologies(project.technologies.backend).map((tech, i) => (
+                          <Badge 
+                            key={i} 
+                            className="tech-badge backend"
+                          >
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="tech-category">
+                      <h5 className="tech-subtitle">Database</h5>
+                      <div className="d-flex flex-wrap gap-2">
+                        <Badge className="tech-badge database">
+                          {project.technologies.database}
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <p className="published-date mt-4 mb-0">
+                    {t(project.published)}
                   </p>
                 </Card.Body>
               </Col>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Tab, Nav, ProgressBar } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
-// ✅ スキルデータ（technical はそのまま、soft は翻訳を適用）
+// スキルデータはそのまま維持
 const skills = {
   technical: [
     { name: "HTML", level: 90 },
@@ -34,7 +34,6 @@ const Skills = () => {
     <Container className="skills-section mt-3" id="skills">
       <h1 className="text-center text-secondary mb-5">{t("skills")}</h1>
       <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
-        {/* タブのナビゲーション */}
         <Nav variant="tabs" className="justify-content-center mb-4">
           <Nav.Item>
             <Nav.Link eventKey="technical" className="fw-bold">{t("techskills")}</Nav.Link>
@@ -44,12 +43,11 @@ const Skills = () => {
           </Nav.Item>
         </Nav>
 
-        {/* タブのコンテンツ */}
         <Tab.Content>
-          <Tab.Pane eventKey="technical">
+          <Tab.Pane eventKey="technical" className="show">
             <SkillList skills={skills.technical} />
           </Tab.Pane>
-          <Tab.Pane eventKey="soft">
+          <Tab.Pane eventKey="soft" className="show">
             <SkillList skills={skills.soft} isSoftSkills={true} />
           </Tab.Pane>
         </Tab.Content>
@@ -58,16 +56,14 @@ const Skills = () => {
   );
 };
 
-// ✅ スキルリストのコンポーネント（アニメーション追加）
 const SkillList = ({ skills, isSoftSkills = false }) => {
   const [animatedSkills, setAnimatedSkills] = useState(skills.map(() => 0));
-  const { t } = useTranslation(); // ✅ 翻訳を取得
+  const { t } = useTranslation();
 
   useEffect(() => {
-    // 遅延アニメーション（0% → 実際の値）
     const timeout = setTimeout(() => {
       setAnimatedSkills(skills.map(skill => skill.level));
-    }, 300); // 300ms の遅延
+    }, 500);
 
     return () => clearTimeout(timeout);
   }, [skills]);
@@ -76,8 +72,9 @@ const SkillList = ({ skills, isSoftSkills = false }) => {
     <Row>
       {skills.map((skill, index) => (
         <Col md={6} key={index} className="mb-3">
-          {/* ✅ `isSoftSkills` の場合は `t()` を適用 */}
-          <h5 className="text-body-secondary">{isSoftSkills ? t(skill.name) : skill.name}</h5>
+          <h5 className="text-body-secondary">
+            {isSoftSkills ? t(skill.name) : skill.name}
+          </h5>
           <ProgressBar 
             now={animatedSkills[index]} 
             label={`${animatedSkills[index]}%`} 

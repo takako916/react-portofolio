@@ -1,48 +1,72 @@
 import './App.css';
 import Header from './components/Header';
 import MainContent from "./components/main/MainContent";
-// import { BrowserRouter as Router } from "react-router-dom";
 import { HashRouter as Router } from "react-router-dom";  
 import { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next"; // ✅ i18n をインポート
-import "./i18n"; // ✅ i18n 設定をインポート
-import { Helmet } from 'react-helmet-async';
+import { useTranslation } from "react-i18next";
+import "./i18n";
+import { ThemeProvider } from './context/ThemeContext';
 
-// ✅ 明るい色のリスト
-const brightColors = [
-  "#FFB6C1", // Light Pink
-  "#FF69B4", // Hot Pink
-  "#FFD700", // Gold
-  "#FF8C00", // Dark Orange
-  "#98FB98", // Pale Green
-  "#87CEFA", // Light Sky Blue
-  "#AFEEEE", // Pale Turquoise
-  "#FFDAB9", // Peach Puff
-  "#E6E6FA", // Lavender
-  "#FFC0CB"  // Pink
+// ポップでアクセシブルな色のパレット
+const popColors = [
+  "#FF6B6B", // コーラルピンク
+  "#4ECDC4", // ターコイズ
+  "#45B7D1", // スカイブルー
+  "#96CEB4", // セージグリーン
+  "#FFBE0B", // マンゴーイエロー
+  "#FF006E", // ホットピンク
+  "#8338EC", // パープル
+  "#4361EE", // ブライトブルー（明るく調整）
+  "#FB5607", // オレンジ
+  "#00BBF9"  // アクアブルー
 ];
 
-// ✅ 明るい色からランダムに選択する関数
-const getBrightPresetColor = () => {
-  return brightColors[Math.floor(Math.random() * brightColors.length)];
+// 色を取得する関数
+const getPopColor = () => {
+  return popColors[Math.floor(Math.random() * popColors.length)];
+};
+
+// 背景色の明るさを計算する関数
+const getBrightness = (hexColor) => {
+  const hex = hexColor.replace('#', '');
+  const r = parseInt(hex.substr(0, 2), 16);
+  const g = parseInt(hex.substr(2, 2), 16);
+  const b = parseInt(hex.substr(4, 2), 16);
+  return (r * 299 + g * 587 + b * 114) / 1000;
+};
+
+// テキストカラーとドロップダウンスタイルを計算する関数を単純化
+const getColors = (backgroundColor) => {
+  const brightness = getBrightness(backgroundColor);
+  const isLight = brightness > 128;
+
+  return {
+    textColor: isLight ? '#2D3436' : '#FFFFFF',
+    dropdownStyle: {
+      backgroundColor: 'rgba(255, 255, 255, 0.95)', // 常に明るい背景
+      textColor: '#2D3436', // ドロップダウンのテキストは常に濃いグレー
+      boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+    }
+  };
 };
 
 function App() {
-  const [bgColor, setBgColor] = useState(getBrightPresetColor()); // ✅ 関数を定義した後に useState で使用
-  const { i18n } = useTranslation(); // ✅ 言語を取得
+  const [bgColor, setBgColor] = useState(getPopColor());
+  const [colorScheme, setColorScheme] = useState(getColors(getPopColor()));
+  const { i18n } = useTranslation();
   const [language, setLanguage] = useState(i18n.language || "en");
 
-  // 言語変更時に `localStorage` に保存し、全コンポーネントに反映
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     localStorage.setItem("language", lng);
-    setLanguage(lng); // ✅ 状態を更新して即時反映
+    setLanguage(lng);
   };
 
-  // ✅ 3秒ごとにランダムな背景色に変更
   useEffect(() => {
     const interval = setInterval(() => {
-      setBgColor(getBrightPresetColor()); // 🔹 明るい色だけをセット
+      const newColor = getPopColor();
+      setBgColor(newColor);
+      setColorScheme(getColors(newColor));
     }, 3000);
   
     return () => clearInterval(interval);
@@ -50,28 +74,23 @@ function App() {
 
   useEffect(() => {
     setLanguage(i18n.language);
-  }, [i18n.language]); // ✅ 言語が変わるたびに更新
+  }, [i18n.language]);
 
   return (
-    <Router>
-       <Helmet>
-        {/* ✅ Google Analyticsタグ（全ページに適用） */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-35GQXDDW5Z"></script>
-        <script>
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-35GQXDDW5Z');
-          `}
-        </script>
-      </Helmet>
-      <div className={`App lang-${language}`}>
-        {/* 言語情報を Header に渡す */}
-        <Header bgColor={bgColor} language={language} changeLanguage={changeLanguage} />
-        <MainContent bgColor={bgColor} language={language} />
-      </div>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <div className={`App lang-${language}`}>
+          <Header 
+            bgColor={bgColor}
+            textColor={colorScheme.textColor}
+            dropdownStyle={colorScheme.dropdownStyle}
+            language={language} 
+            changeLanguage={changeLanguage} 
+          />
+          <MainContent bgColor={bgColor} language={language} />
+        </div>
+      </Router>
+    </ThemeProvider>
   );
 }
 

@@ -1,48 +1,120 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { useTranslation } from "react-i18next";
+import ThemeToggle from './ThemeToggle';
 
-const Header = ({ bgColor, changeLanguage }) => {
+const Header = ({ bgColor, textColor, dropdownStyle, changeLanguage }) => {
   const { t } = useTranslation();
-  const resumeLink = t("resume_link"); //
+  const resumeLink = t("resume_link");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <Navbar
-      expand="lg"
-      variant="dark"
-      className="navbar-custom"
-      style={{
-        backgroundColor: bgColor, 
-        transition: "background 1s ease-in-out",
-        position: "fixed",  
-        top: "0",
-        width: "100%",
-        zIndex: "1000"
-      }}
-    >
-      <Container fluid>
-        <Navbar.Brand href="#home">{t("home")}</Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarNav" />
-        <Navbar.Collapse id="navbarNav">
-          <Nav className="me-auto">
-          <Nav.Link href={resumeLink} target="_blank" rel="noopener noreferrer">
-              {t("resume")}
-            </Nav.Link>
-            <Nav.Link href="#projects">{t("projects")}</Nav.Link>
-            <Nav.Link href="#skills">{t("skills")}</Nav.Link>
-            <Nav.Link href="#footer">{t("contact")}</Nav.Link>
-          </Nav>
-          <Nav>
-            {/* 言語切り替え用のドロップダウン */}
-            <NavDropdown align="end" title={<i className="bi bi-globe"></i>} id="language-dropdown">
-              <NavDropdown.Item className="fw-bold" onClick={() => changeLanguage("en")}>English</NavDropdown.Item>
-              <NavDropdown.Item className="fw-bold" onClick={() => changeLanguage("ja")}>日本語</NavDropdown.Item>
-              <NavDropdown.Item className="fw-bold" onClick={() => changeLanguage("fr")}>Français</NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <>
+      <Navbar
+        expand="lg"
+        className={`navbar-custom ${isScrolled ? 'scrolled' : ''}`}
+        style={{
+          backgroundColor: isScrolled ? `${bgColor}dd` : bgColor,
+          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          position: "fixed",
+          top: 0,
+          width: "100%",
+          zIndex: 1000,
+          padding: isScrolled ? "0.5rem 1rem" : "1rem",
+          boxShadow: isScrolled ? "0 2px 15px rgba(0,0,0,0.1)" : "none",
+          backdropFilter: isScrolled ? "blur(10px)" : "none"
+        }}
+      >
+        <Container fluid>
+          <Navbar.Brand 
+            href="#home"
+            className="brand-text"
+            style={{
+              color: textColor,
+              transform: isScrolled ? 'scale(0.9)' : 'scale(1)',
+            }}
+          >
+            {t("home")}
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarNav" style={{ borderColor: textColor }}>
+            <span className="navbar-toggler-icon" style={{ backgroundColor: textColor }}></span>
+          </Navbar.Toggle>
+          <Navbar.Collapse id="navbarNav">
+            <Nav className="me-auto nav-links">
+              {[
+                { href: resumeLink, text: t("resume"), target: "_blank", rel: "noopener noreferrer" },
+                { href: "#projects", text: t("projects") },
+                { href: "#skills", text: t("skills") },
+                { href: "#footer", text: t("contact") }
+              ].map((link, index) => (
+                <Nav.Link
+                  key={index}
+                  href={link.href}
+                  target={link.target}
+                  rel={link.rel}
+                  style={{ color: textColor }}
+                  className="nav-link-animated"
+                >
+                  {link.text}
+                </Nav.Link>
+              ))}
+            </Nav>
+            <Nav>
+              <NavDropdown 
+                align="end" 
+                title={
+                  <span className="globe-icon">
+                    <i className="bi bi-globe" style={{ color: textColor }}></i>
+                  </span>
+                } 
+                id="language-dropdown"
+                className="custom-dropdown"
+              >
+                <div 
+                  className="dropdown-menu-wrapper"
+                  style={{
+                    backgroundColor: dropdownStyle.backgroundColor,
+                    boxShadow: dropdownStyle.boxShadow
+                  }}
+                >
+                  {[
+                    { lang: "en", text: "English", icon: "🇬🇧" },
+                    { lang: "ja", text: "日本語", icon: "🇯🇵" },
+                    { lang: "fr", text: "Français", icon: "🇫🇷" }
+                  ].map((item, index) => (
+                    <NavDropdown.Item 
+                      key={index}
+                      onClick={() => changeLanguage(item.lang)}
+                      className="fw-bold dropdown-item-animated"
+                      style={{
+                        color: dropdownStyle.textColor,
+                        backgroundColor: 'transparent'
+                      }}
+                    >
+                      <span className="language-item">
+                        <span className="language-icon">{item.icon}</span>
+                        <span className="language-text">{item.text}</span>
+                      </span>
+                    </NavDropdown.Item>
+                  ))}
+                </div>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <ThemeToggle />
+    </>
   );
 };
 

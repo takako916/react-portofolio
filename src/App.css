@@ -22,7 +22,13 @@
 
 /* 🔥 ナビゲーションバーのテキスト & トグルメニューの色 */
 .navbar-custom {
-  transition: background 1s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 0;
+}
+
+.navbar-custom.scrolled {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .navbar-custom .navbar-brand,
@@ -178,6 +184,691 @@
 .about-badge:hover {
   background-color: rgba(255, 255, 255, 0.2); /* ✅ 透明な白を軽く適用 */
   transform: scale(1.1); /* ✅ 少し大きく */
+}
+
+/* ヘッダーのスタイル */
+.navbar-custom {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-custom.scrolled {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.navbar-custom .nav-link {
+  position: relative;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-custom .nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: currentColor;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navbar-custom .nav-link:hover::after {
+  width: 100%;
+}
+
+/* メインコンテンツのスタイル */
+.main-content {
+  min-height: 100vh;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* ホームセクションの特別な処理 */
+#home {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* 他のセクションは通常のパディングを維持 */
+.section:not(#home) {
+  padding: 4rem 0;
+}
+
+/* ドロップダウンメニューのスタイル */
+.custom-dropdown .dropdown-menu {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  animation: dropdownFade 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.dropdown-item-animated {
+  position: relative;
+  transition: all 0.3s ease;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  color: #2D3436;
+}
+
+.dropdown-item-animated:hover {
+  transform: translateX(5px);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ナビゲーションリンクのホバーエフェクトを調整 */
+.navbar-custom .nav-link:hover {
+  opacity: 0.8;
+}
+
+/* ナビゲーションリンクのアニメーション */
+.nav-link-animated {
+  position: relative;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.nav-link-animated::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: currentColor;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+.nav-link-animated:hover::after {
+  width: 100%;
+  opacity: 1;
+}
+
+/* ドロップダウンメニューのスタイル */
+.custom-dropdown .dropdown-menu {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: dropdownFade 0.3s ease;
+  min-width: 160px;
+}
+
+.dropdown-menu-wrapper {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.language-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+}
+
+.language-icon {
+  font-size: 1.2em;
+}
+
+.language-text {
+  font-weight: 500;
+}
+
+.dropdown-item-animated {
+  position: relative;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin: 2px 0;
+}
+
+/* ホバーエフェクトの改善 */
+.dropdown-item-animated:hover {
+  transform: translateX(5px);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 明るい背景用の改善されたホバースタイル */
+.dropdown-item-animated[style*="color: #2D3436"]:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 暗い背景用の改善されたホバースタイル */
+.dropdown-item-animated[style*="color: #FFFFFF"]:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* グローブアイコンのアニメーション */
+.globe-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.custom-dropdown:hover .globe-icon {
+  transform: rotate(20deg);
+}
+
+/* ドロップダウンアニメーションの改善 */
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* スクロール時のドロップダウン調整 */
+.navbar-custom.scrolled .custom-dropdown .dropdown-menu {
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 991.98px) {
+  .navbar-custom {
+    padding: 0.5rem 1rem !important;
+  }
+  
+  .navbar-collapse {
+    background-color: inherit;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 0.5rem;
+  }
+
+  .nav-link-animated {
+    padding: 1rem;
+    margin: 0.25rem 0;
+    border-radius: 5px;
+  }
+
+  .nav-link-animated:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* ブランドテキストのアニメーション */
+.brand-text {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* アニメーション用のスタイル */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* スムーズスクロール */
+html {
+  scroll-behavior: smooth;
+}
+
+/* セクション間のスペーシング */
+.section {
+  padding: 4rem 0;
+  position: relative;
+  transition: all var(--transition-speed) ease-out;
+}
+
+/* ヘッダーの微調整 */
+.navbar-custom {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-custom.scrolled {
+  padding: 0.5rem 1rem;
+}
+
+/* ナビゲーションリンクの改善 */
+.nav-link {
+  position: relative;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 50%;
+  background-color: currentColor;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* レスポンシブ調整 */
+@media (max-width: 991.98px) {
+  .section {
+    padding: 3rem 0;
+  }
+  
+  .navbar-custom.scrolled {
+    padding: 0.5rem;
+  }
+  
+  .nav-link {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* フォントの最適化 */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* プロジェクトカードのスタイル */
+.project-card {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all var(--transition-speed) ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.project-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px var(--shadow-color);
+}
+
+.project-image-container {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.project-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.4)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-image-container:hover .project-image-overlay {
+  opacity: 1;
+}
+
+.project-image-container:hover .project-image {
+  transform: scale(1.05);
+}
+
+.visit-site-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #2D3436;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.project-image-container:hover .visit-site-button {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* テクノロジーバッジのスタイル */
+.tech-badge {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.tech-badge.frontend {
+  background-color: #0066CC;
+  color: white;
+}
+
+.tech-badge.backend {
+  background-color: #2F7A57;
+  color: white;
+}
+
+.tech-badge.database {
+  background-color: #CC6600;
+  color: white;
+}
+
+/* ホバー効果を追加（オプション） */
+.tech-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* バッジ間のスペースを確保 */
+.tech-category .d-flex {
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.tech-title {
+  font-size: 1.2rem;
+  color: #2D3436;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.tech-subtitle {
+  font-size: 0.9rem;
+  color: #636E72;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.card-title {
+  color: #2D3436;
+  font-weight: 600;
+}
+
+.card-description {
+  color: #636E72;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.published-date {
+  color: #B2BEC3;
+  font-size: 0.9rem;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .project-image-container {
+    height: 300px;
+  }
+  
+  .project-card {
+    margin: 1rem;
+  }
+}
+
+/* 画像最適化関連のスタイル */
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.optimized-image {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.loaded .optimized-image {
+  opacity: 1;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* スクロールプログレスバー */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, #4CAF50, #8BC34A);
+  transform-origin: 0%;
+  z-index: 1000;
+}
+
+/* ダークモード用の変数 */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #2D3436;
+  --text-secondary: #636E72;
+  --accent-color: #0066CC;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.125);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
+}
+
+[data-theme='dark'] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --accent-color: #66b3ff;
+  --card-bg: #2d2d2d;
+  --card-border: rgba(255, 255, 255, 0.125);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* テーマトグルボタン */
+.theme-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  border: none;
+  background: var(--card-bg);
+  box-shadow: 0 2px 10px var(--shadow-color);
+  cursor: pointer;
+  z-index: 1000;
+  transition: all var(--transition-speed) ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle .material-icons {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  transition: all var(--transition-speed) ease;
+}
+
+/* セクションのアニメーション */
+.section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all var(--transition-speed) ease-out;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* カードのアニメーション */
+.project-card {
+  background-color: var(--card-bg);
+  transition: all var(--transition-speed) ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px var(--shadow-color);
+}
+
+/* ダークモード時のスタイル調整 */
+[data-theme='dark'] .project-card {
+  background-color: var(--card-bg);
+}
+
+[data-theme='dark'] .tech-badge {
+  background-color: var(--bg-secondary);
+}
+
+/* フェードアップアニメーション */
+.fade-up {
+  opacity: 1; /* 初期状態を表示に変更 */
+  transform: translateY(20px);
+  transition: all var(--transition-speed) ease-out;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ナビゲーションのアニメーション */
+.nav-link {
+  position: relative;
+  transition: all var(--transition-speed) ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-color);
+  transition: all var(--transition-speed) ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* スムーズスクロール */
+html {
+  scroll-behavior: smooth;
+}
+
+/* テーマ切り替えのトランジション */
+body {
+  transition: background-color var(--transition-speed) ease;
+}
+
+/* スクロールプログレスバー */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, var(--accent-color), var(--accent-color));
+  transform-origin: 0%;
+  z-index: 1001;
+}
+
+/* スキルセクションのアニメーション */
+.skills-section h1,
+.skills-section .nav,
+.skills-section .tab-content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all var(--transition-speed) ease-out;
+}
+
+.skills-section h1.visible,
+.skills-section .nav.visible,
+.skills-section .tab-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* プログレスバーの改善されたスタイル */
+.custom-progress {
+  height: 25px;
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  margin-top: 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.custom-progress .progress-bar {
+  background-color: #0d6efd;
+  border-radius: 15px;
+  transition: width 1s ease-in-out;
+  position: relative;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* スキルセクションのレイアウト改善 */
+.skills-section .col-md-6 {
+  margin-bottom: 20px;
+}
+
+.skills-section h5 {
+  margin-bottom: 8px;
+  font-weight: 500;
 }
 
 
