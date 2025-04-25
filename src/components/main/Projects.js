@@ -16,8 +16,8 @@ const Projects = () => {
       link: "https://www.benoitreiss.com",
       published: "published_october",
       technologies: {
-        frontend: "React, Bootstrap, JavaScript",
-        backend: "Symfony (PHP)",
+        frontend: "React, CSS, Bootstrap, JavaScript, Typescipt",
+        backend: "Symfony(PHP), Next.js(Node.js)",
         database: "MySQL"
       },
     },
@@ -30,7 +30,7 @@ const Projects = () => {
       published: "published_august",
       technologies: {
         frontend: "HTML, CSS, Bootstrap, JavaScript, Chart.js",
-        backend: "PHP (MVC)",
+        backend: "PHP(MVC)",
         database: "MariaDB",
       },
     },
