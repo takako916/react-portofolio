@@ -7,6 +7,7 @@ const Header = ({ bgColor, textColor, dropdownStyle, changeLanguage }) => {
   const { t } = useTranslation();
   const resumeLink = t("resume_link");
   const [isScrolled, setIsScrolled] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +18,10 @@ const Header = ({ bgColor, textColor, dropdownStyle, changeLanguage }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleNavClick = () => {
+    setExpanded(false);
+  };
 
   return (
     <>
@@ -34,8 +39,10 @@ const Header = ({ bgColor, textColor, dropdownStyle, changeLanguage }) => {
           boxShadow: isScrolled ? "0 2px 15px rgba(0,0,0,0.1)" : "none",
           backdropFilter: isScrolled ? "blur(10px)" : "none"
         }}
+        expanded={expanded}
+        onToggle={(expanded) => setExpanded(expanded)}
       >
-        <Container fluid>
+        <Container>
           <Navbar.Brand 
             href="#home"
             className="brand-text"
@@ -43,6 +50,7 @@ const Header = ({ bgColor, textColor, dropdownStyle, changeLanguage }) => {
               color: textColor,
               transform: isScrolled ? 'scale(0.9)' : 'scale(1)',
             }}
+            onClick={handleNavClick}
           >
             {t("home")}
           </Navbar.Brand>
@@ -64,52 +72,54 @@ const Header = ({ bgColor, textColor, dropdownStyle, changeLanguage }) => {
                   rel={link.rel}
                   style={{ color: textColor }}
                   className="nav-link-animated"
+                  onClick={handleNavClick}
                 >
                   {link.text}
                 </Nav.Link>
               ))}
             </Nav>
-            <Nav>
-              <NavDropdown 
-                align="end" 
-                title={
-                  <span className="globe-icon">
-                    <i className="bi bi-globe" style={{ color: textColor }}></i>
-                  </span>
-                } 
-                id="language-dropdown"
-                className="custom-dropdown"
+            <NavDropdown 
+              align="end" 
+              title={
+                <span className="globe-icon">
+                  <i className="bi bi-globe" style={{ color: textColor }}></i>
+                </span>
+              } 
+              id="language-dropdown"
+              className="custom-dropdown"
+            >
+              <div 
+                className="dropdown-menu-wrapper"
+                style={{
+                  backgroundColor: dropdownStyle.backgroundColor,
+                  boxShadow: dropdownStyle.boxShadow
+                }}
               >
-                <div 
-                  className="dropdown-menu-wrapper"
-                  style={{
-                    backgroundColor: dropdownStyle.backgroundColor,
-                    boxShadow: dropdownStyle.boxShadow
-                  }}
-                >
-                  {[
-                    { lang: "en", text: "English", icon: "🇬🇧" },
-                    { lang: "ja", text: "日本語", icon: "🇯🇵" },
-                    { lang: "fr", text: "Français", icon: "🇫🇷" }
-                  ].map((item, index) => (
-                    <NavDropdown.Item 
-                      key={index}
-                      onClick={() => changeLanguage(item.lang)}
-                      className="fw-bold dropdown-item-animated"
-                      style={{
-                        color: dropdownStyle.textColor,
-                        backgroundColor: 'transparent'
-                      }}
-                    >
-                      <span className="language-item">
-                        <span className="language-icon">{item.icon}</span>
-                        <span className="language-text">{item.text}</span>
-                      </span>
-                    </NavDropdown.Item>
-                  ))}
-                </div>
-              </NavDropdown>
-            </Nav>
+                {[
+                  { lang: "en", text: "English", icon: "🇬🇧" },
+                  { lang: "ja", text: "日本語", icon: "🇯🇵" },
+                  { lang: "fr", text: "Français", icon: "🇫🇷" }
+                ].map((item, index) => (
+                  <NavDropdown.Item 
+                    key={index}
+                    onClick={() => {
+                      changeLanguage(item.lang);
+                      handleNavClick();
+                    }}
+                    className="fw-bold dropdown-item-animated"
+                    style={{
+                      color: dropdownStyle.textColor,
+                      backgroundColor: 'transparent'
+                    }}
+                  >
+                    <span className="language-item">
+                      <span className="language-icon">{item.icon}</span>
+                      <span className="language-text">{item.text}</span>
+                    </span>
+                  </NavDropdown.Item>
+                ))}
+              </div>
+            </NavDropdown>
           </Navbar.Collapse>
         </Container>
       </Navbar>
